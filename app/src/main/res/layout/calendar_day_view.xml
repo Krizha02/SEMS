@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <!-- Day Header -->
+    <TextView
+        android:id="@+id/dayHeaderText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:textColor="@color/text_primary"
+        android:text="Monday, May 1"/>
+
+    <!-- Day Schedule -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dayScheduleList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"/>
+
+</LinearLayout> 
