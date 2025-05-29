@@ -31,8 +31,6 @@ public class ProfileFragment extends Fragment {
     private TextInputEditText nameInput;
     private TextInputEditText phoneNumberInput;
     private TextInputEditText departmentInput;
-    private TextInputLayout positionTextInputLayout;
-    private AutoCompleteTextView positionAutoCompleteTextView;
     private Button saveProfileButton;
 
     @Override
@@ -61,14 +59,7 @@ public class ProfileFragment extends Fragment {
         nameInput = view.findViewById(R.id.nameInput);
         phoneNumberInput = view.findViewById(R.id.phoneNumberInput);
         departmentInput = view.findViewById(R.id.departmentInput);
-        positionTextInputLayout = view.findViewById(R.id.positionTextInputLayout);
-        positionAutoCompleteTextView = view.findViewById(R.id.positionAutoCompleteTextView);
         saveProfileButton = view.findViewById(R.id.saveProfileButton);
-
-        // Set up Position dropdown
-        String[] roles = {"admin", "user"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, roles);
-        positionAutoCompleteTextView.setAdapter(adapter);
 
         // Load user data if available
         if (currentUser != null) {
@@ -77,13 +68,6 @@ public class ProfileFragment extends Fragment {
             nameInput.setText(currentUser.getName());
             phoneNumberInput.setText(currentUser.getPhoneNumber());
             departmentInput.setText(currentUser.getDepartment());
-            positionAutoCompleteTextView.setText(currentUser.getRole(), false);
-
-            // Hide position field for non-admin users
-            if (!"admin".equals(currentUser.getRole())) {
-                positionTextInputLayout.setVisibility(View.GONE);
-                // Also prevent saving the role if the field is hidden
-            }
         }
 
         // Set up Save button click listener
@@ -101,13 +85,6 @@ public class ProfileFragment extends Fragment {
             currentUser.setName(name);
             currentUser.setPhoneNumber(phoneNumber);
             currentUser.setDepartment(department);
-
-            // Only update position/role if the user is an admin (field was enabled)
-            if ("admin".equals(currentUser.getRole())) {
-                String position = positionAutoCompleteTextView.getText().toString().trim();
-                currentUser.setPosition(position);
-                currentUser.setRole(position); // Assuming position and role are the same here
-            }
 
             // Save to database
             int result = dbHelper.updateUser(currentUser);
